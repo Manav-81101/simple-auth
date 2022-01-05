@@ -46,7 +46,7 @@ import {Link} from '@reach/router'
 
 function Login({ navigate }) {
   if(isLoggedIn()) {
-    navigate('/home')
+    navigate('app/home')
   }
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
