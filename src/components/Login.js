@@ -39,17 +39,16 @@
 
 // export default Login
 
-import React from 'react';
-import { handleLogin, isLoggedIn } from '../helpers/auth';
-import {Link} from '@reach/router'
-
+import React from "react";
+import { handleLogin, isLoggedIn } from "../helpers/auth";
+import { Link } from "@reach/router";
 
 function Login({ navigate }) {
-  if(isLoggedIn()) {
-    navigate('app/home')
+  if (isLoggedIn()) {
+    navigate("/app/home");
   }
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState(false);
   return (
     <div>
@@ -76,7 +75,7 @@ function Login({ navigate }) {
       >
         Login
       </button>
-      <br/>
+      <br />
       <Link to="/app/signup">Go for Signup</Link>
 
       {error ? <p>{error.message}</p> : null}
@@ -85,4 +84,3 @@ function Login({ navigate }) {
 }
 
 export default Login;
-

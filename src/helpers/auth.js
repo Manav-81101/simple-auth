@@ -4,27 +4,28 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-} from 'firebase/auth';
+} from "firebase/auth";
 
-import { navigate } from 'gatsby';
+import { navigate } from "gatsby";
 
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDY4Oz0WffsyJ-60jep3EwaRcM10JsWVPQ',
-  authDomain: 'thunkable-a655f.firebaseapp.com',
-  databaseURL: 'https://thunkable-a655f.firebaseio.com',
-  projectId: 'thunkable-a655f',
-  storageBucket: 'thunkable-a655f.appspot.com',
-  messagingSenderId: '250438261811',
-  appId: '1:250438261811:web:6afe5c9d8c3a8cd9851746',
-  measurementId: 'G-QKD4FQFX6D',
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DATABASE_URL,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGE_SENDER_ID,
+  appId: process.env.APP_ID,
+  measurementId: process.env.MEASUREMENT_ID,
 };
+console.log(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = typeof window !== "undefined";
 
 const getUser = () =>
   window.localStorage.firebaseUser
@@ -39,7 +40,7 @@ export const handleLogin = async ({ username, password }) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, username, password);
     setUser({ email: user.email, uid: user.uid });
-    navigate('/app/home');
+    navigate("/app/home", { replace: true });
   } catch (err) {
     console.log(err);
     return err;
@@ -56,7 +57,7 @@ export const handleSignup = async ({ username, password }) => {
       password
     );
     setUser({ email: user.email, uid: user.uid });
-    navigate('/app/home');
+    navigate("app/home", { replace: true });
   } catch (err) {
     console.log(err);
     return err;
@@ -69,11 +70,10 @@ export const isLoggedIn = () => {
   if (!isBrowser) return false;
 
   const user = getUser();
-  console.log(!!user.email);
   return !!user.email;
 };
 
-export const getCurrentUser = () => isBrowser && auth.currentUser;
+export const getCurrentUser = () => isLoggedIn() && auth.currentUser;
 
 export const logout = async (callback) => {
   if (!isBrowser) return;

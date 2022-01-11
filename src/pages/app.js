@@ -4,13 +4,19 @@ import Login from "../components/Login";
 import PrivateRoute from "../components/PrivateRoute";
 import Signup from "../components/Signup";
 import Home from "../components/Home";
+import { observer, Provider } from "mobx-react";
+import { pokemonStore, Context } from "../helpers/store";
 
-const App = () => (
-  <Router>
-    <PrivateRoute path="/app/home" component={Home} />
-    <Login path="/app/login" />
-    <Signup path="/app/signup" />
-  </Router>
-);
+const App = observer(() => {
+  return (
+    <Context.Provider value={pokemonStore}>
+      <Router>
+        <PrivateRoute path="/app/home" component={Home} />
+        <Login path="/app/login" />
+        <Signup path="/app/signup" />
+      </Router>
+    </Context.Provider>
+  );
+});
 
 export default App;
